@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div v-memo=[age]>
+      <h2>姓名：{{name}}</h2>
+      <h2>年龄：{{age}}</h2>
+      <h2>身高：{{height}}</h2>
+    </div>
+    
+    <button @click="changeInfo">改变信息</button>
+  </div>
+
+  <script src="../js/vue.js"></script>
+  <script>
+    // 创建app
+    const app = Vue.createApp({
+      // data:option api
+      data: function () {
+        return {
+          name:"张三",
+          age:18,
+          height:1.88
+        }
+      },
+      methods:{
+        changeInfo:function(){
+          this.name='李四'
+        }
+      }
+    })
+    //挂载app
+    app.mount("#app")
+  </script>
+</body>
+
+</html>

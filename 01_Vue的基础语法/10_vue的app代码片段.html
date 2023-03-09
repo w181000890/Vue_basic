@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 
+    1.表达式  counter*2
+    2.三元表达式
+    3.函数 可以传参
+   -->
+  <div id="app">
+    <h2>{{message}}</h2>
+    <h2>{{counter * 2}}</h2>
+    <!-- 三元表达式 -->
+
+    <h2>{{age >18?"成年":"未成年"}}</h2>
+    <h2>{{dateFormat(reMe)}}</h2>
+
+
+
+  </div>
+
+  <script src="./js/vue.js"></script>
+  <script>
+    // 创建app
+    const app = Vue.createApp({
+      // data:option api
+      data: function () {
+        return {
+          message: "Hello World",
+          counter: 10,
+          age: 18,
+          reMe:"000:00"
+        }
+      },
+      methods:{
+          dateFormat:function(res){
+            return "2023-03-04-"+res
+          }
+      }
+    })
+    //挂载app
+    app.mount("#app")
+  </script>
+</body>
+
+</html>

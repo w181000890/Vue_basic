@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>我今天很开心</h2>
+  <p>你好呀</p>
+  <div id="app"> </div>
+  <!-- 引入vue -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  
+  <script >
+    //使用vue
+    const app = Vue.createApp({
+      template:"<h2>Hello World</h2>"
+    })
+    // 挂载
+    app.mount("#app")
+  </script>
+</body>
+</html>
