@@ -10,18 +10,30 @@
 
 <body>
   <div id="app">
-    <h2>{{message}}</h2>
+    <img v-bind:src="img" alt="">
+    <!-- <img src="../imgs/1.jfif" alt=""> -->
+    <button @click="changeImage">点击切换图片</button>
   </div>
+  
 
-  <script src="./js/vue.js"></script>
+  <script src="../js/vue.js"></script>
   <script>
     // 创建app
     const app = Vue.createApp({
       // data:option api
-      
+
       data: function () {
         return {
-          message: "Hello World"
+          imgUrl1: "../imgs/1.jfif"
+          , imgUrl2: "../imgs/2.webp"
+          , img: "../imgs/2.webp"
+        }
+      },
+      methods:{
+        changeImage:function(){
+          // console.log(this.img)
+          this.img = this.img===this.imgUrl1? this.imgUrl2: this.imgUrl1
+          console.log(this.img)
         }
       }
     })
