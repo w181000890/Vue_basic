@@ -7,22 +7,52 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .colorClass{
+      color:red
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
-    <h2>{{message}}</h2>
-  </div>
+    <!-- 基本绑定 -->
+    <h2 :class="classarr">{{message}}</h2>
+    <!-- 绑定对象-->
+    <!-- 三元表达式 -->
+    <button :class="changeClass?'colorClass':''" @click="changeColor">点击变色</button>
+    <button :class="{colorClass:changeClass}" @click="changeColor">点击变色</button>
+    <!-- 多键值对 -->
+    <button :class="{colorClass:changeClass,why:true}" @click="changeColor">点击变色</button>
+    <!-- 动态绑定的class和普通class同时使用 -->
+    <button class="ABC cda" :class="{colorClass:changeClass,why:true}" @click="changeColor">点击变色</button>
+    <!-- 从方法中获取 -->
+    <button class="ABC cda" :class="getClass()" @click="changeColor">点击变色</button>
+    <!-- 从方法中获取 -->
+   </div>
   
 
-  <script src="./js/vue.js"></script>
+  <script src="../js/vue.js"></script>
   <script>
     // 创建app
     const app = Vue.createApp({
       // data:option api
       data: function () {
         return {
-          message: "Hello World"
+          message: "Hello World",
+          // classarr:["abc","def","yzx"],
+          classarr:"abc def yzx",
+          changeClass:false
+
+        }
+      },
+      methods:{
+        changeColor:function(){
+          this.changeClass = !this.changeClass
+          console.log(this.changeClass)
+        },
+        getClass(){
+          return { colorClass: this.changeClass, why: true }
         }
       }
     })
