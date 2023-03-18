@@ -6,22 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
-    .box {
-      height: 100px;
-      width: 100px;
-      background-color: pink;
-      margin-top: 10px;
-    }
-  </style>
 </head>
 
 <body>
   <div id="app">
-    <div class="box" @click="btnClick"></div>
-    <div class="box" @mouseMove="btnMove"></div>
-    <div class="box" @click="btnClick" @mouseMove="btnMove"></div>
-    <div class="box" v-on="{click:btnClick,mousemove:btnMove}"></div>
+    <button @click="btn1Method">{{message}}</button>
+    <!-- 有参数 -->
+    <button @click="btn2Method('why',age)">{{message}}</button>
+    <!-- 带有默认参数 -->
+    <button @click="btn3Method('why',age,$event)">{{message}}</button>
+
   </div>
 
   <script src="../js/vue.js"></script>
@@ -31,17 +25,26 @@
       // data:option api
       data: function () {
         return {
-          message: "Hello World"
+          message: "Hello World",
+          age:18
         }
       },
       methods:{
-        btnClick(){
-          console.log("点击了")
+        btn1Method(event){
+          console.log(event)
+
         },
-        btnMove(){
-          console.log("移动了")
-        }
+        btn2Method(why,age) {
+          console.log(why,age)
+
+        },
+        btn3Method(...event) {
+          console.log(event)
+
+        },
+
       }
+
     })
     //挂载app
     app.mount("#app")
