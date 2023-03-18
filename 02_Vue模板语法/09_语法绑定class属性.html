@@ -28,7 +28,12 @@
     <button class="ABC cda" :class="{colorClass:changeClass,why:true}" @click="changeColor">点击变色</button>
     <!-- 从方法中获取 -->
     <button class="ABC cda" :class="getClass()" @click="changeColor">点击变色</button>
-    <!-- 从方法中获取 -->
+    <!-- 绑定数组语法-->
+    <h2 :class="['a','n']">绑定数组</h2>
+    <h2 :class="['a',changeClass ? 'colorClass':'']">绑定数组</h2>
+    <h2 :class="['a',{colorClass:changeClass}]">绑定数组</h2>
+
+
    </div>
   
 

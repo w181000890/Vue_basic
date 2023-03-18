@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 基本绑定 -->
+    <h2  style="color:red; font-size:20px">{{message}}</h2>
+    <!-- 对象动态绑定 -->
+    <h2 :style="{color:Color,'font-size':fontSize}">{{message}}</h2>
+    <!-- 数组动态绑定 -->
+    <h2 :style="[objStyle,{backgroundColor:'purple'}]">{{message}}</h2>
+  </div>
+
+  <script src="../js/vue.js"></script>
+  <script>
+    // 创建app
+    const app = Vue.createApp({
+      // data:option api
+      data: function () {
+        return {
+          message: "Hello World",
+          Color:'blue',
+          fontSize:'30px',
+          objStyle:{
+            color:'green',
+            fontSize:'50px'
+          }
+
+        }
+      }
+    })
+    //挂载app
+    app.mount("#app")
+  </script>
+</body>
+
+</html>
