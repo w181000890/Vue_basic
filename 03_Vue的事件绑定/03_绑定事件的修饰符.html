@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box{
+      height: 100px;
+      width: 100px;
+      background-color: pink;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h2>{{message}}</h2>
+    <div class="box" @click="divclick">
+      <button @click="btnclick">按钮一</button>
+    </div>
+  </div>
+
+  <script src="../js/vue.js"></script>
+  <script>
+    // 创建app
+    const app = Vue.createApp({
+      // data:option api
+      data: function () {
+        return {
+          message: "Hello World"
+        }
+      },
+      methods:{
+        btnclick(){
+          console.log("btnclick被点击了")
+        },
+        divclick(){
+          console.log("divClick  被点击了")
+        }
+      }
+    })
+    //挂载app
+    app.mount("#app")
+  </script>
+</body>
+
+</html>
