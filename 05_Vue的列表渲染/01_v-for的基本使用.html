@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .product{
+      background-color: pink;
+    }
+    .name{
+      font-size: 20px;
+      color:red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h2>电影列表</h2>
+    <ul>
+      <li v-for="movie in movies">{{movie}}</li>
+    </ul>
+    <ul>
+      <li v-for="(movie,index) in movies">{{index+1}}--{{movie}}</li>
+    </ul>
+    <h2>商品列表</h2>
+    <div v-for="item in products">
+      <div class="product">
+        <h3 class="name">商品：{{item.name}}</h3>
+        <div>价格：{{item.price}}</div>
+        <div>秒杀：{{item.seckill}}</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="../js/vue.js"></script>
+  <script>
+    // 创建app
+    const app = Vue.createApp({
+      // data:option api
+      data: function () {
+        return {
+          movies: ["大话西游", "星际穿越", "少年漂流", "疯狂石头"],
+          products: [
+            { id: "110", name: "Macbook", price: 9.9, seckill: "9.9元秒杀，快来抢购" },
+            { id: "111", name: "Macbook", price: 9.9, seckill: "9.9元秒杀，快来抢购" },
+            { id: "112", name: "Macbook", price: 9.9, seckill: "9.9元秒杀，快来抢购" },
+
+          ]
+        }
+
+      }
+    })
+    //挂载app
+    app.mount("#app")
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+
+    <button @click="IsshowCode">切换</button>
+    <div v-show="isShow">
+      <img src="../imgs/1.jfif" alt="">
+    </div>
+  </div>
+
+  <script src="../js/vue.js"></script>
+  <script>
+    // 创建app
+    const app = Vue.createApp({
+      // data:option api
+      data: function () {
+        return {
+          isShow: true
+        }
+      },
+      methods: {
+        IsshowCode() {
+          this.isShow = !this.isShow
+        }
+      },
+    })
+    //挂载app
+    app.mount("#app")
+  </script>
+</body>
+
+</html>
