@@ -10,9 +10,9 @@
 
 <body>
   <div id="app">
-    <h2>{{fullName()}}</h2>
-    <h2>{{getScore()}}</h2>
-    <h2>{{getLetters()}}</h2>
+    <h2>{{fullName}}</h2>
+    <h2>{{getScore}}</h2>
+    <h2>{{getLetters}}</h2>
   </div>
 
   <script src="../js/vue.js"></script>
@@ -28,14 +28,14 @@
           letters: "I am happy"
         }
       },
-      methods:{
-        fullName(){
-          return this.firstName + " "+ this.lastName
+      computed: {
+        fullName() {
+          return this.firstName + " " + this.lastName
         },
-        getScore(){
-          return this.score>60?"及格":"不及格"
+        getScore() {
+          return this.score > 60 ? "及格" : "不及格"
         },
-        getLetters(){
+        getLetters() {
           return this.letters.split(" ").reverse().join(" ")
         }
       }
