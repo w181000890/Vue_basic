@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- @click调用方法没有参数可以不写括号 -->
+    <button @click="changFirstName">改变firstName</button>
+    <h2>{{getFullNameMethods()}}</h2>
+    <h2>{{getFullNameMethods()}}</h2>
+    <h2>{{getFullNameMethods()}}</h2>
+    <h2>{{getFullname}}</h2>
+    <h2>{{getFullname}}</h2>
+    <h2>{{getFullname}}</h2>
+  </div>
+
+  <script src="../js/vue.js"></script>
+  <script>
+    // 创建app
+    const app = Vue.createApp({
+      // data:option api
+      data: function () {
+        return {
+          firstName: "meng",
+          lastName: "wang"
+        }
+      },
+      methods: {
+        getFullNameMethods() {
+          console.log("调用方法")
+          return this.lastName + " " + this.firstName
+        },
+        changFirstName(){
+          this.firstName = "zhang"
+        }
+
+      },
+      computed: {
+        getFullname() {
+          console.log("调用计算属性")
+          return this.lastName + " " + this.firstName
+        }
+      }
+    })
+    //挂载app
+    app.mount("#app")
+  </script>
+</body>
+
+</html>
