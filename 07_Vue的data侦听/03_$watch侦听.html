@@ -10,7 +10,8 @@
 
 <body>
   <div id="app">
-    <h2>{{message}}</h2>
+    <h2>{{info}}</h2>
+    <button @click="changeinfo">改变info</button>
   </div>
 
   <script src="../js/vue.js"></script>
@@ -20,9 +21,20 @@
       // data:option api
       data: function () {
         return {
-          message: "Hello World"
+          info:{name:'wang',age:18}
         }
+      },
+      methods:{
+        changeinfo(){
+          this.info.name = "meng"
+        }
+      },
+      created() {
+        console.log("创建了")
+        this.$watch("info",(newvalue,oldvalue)=>{console.log("$watch:",newvalue,oldvalue)
+        },{deep:true,immediate:true})
       }
+      
     })
     //挂载app
     app.mount("#app")
