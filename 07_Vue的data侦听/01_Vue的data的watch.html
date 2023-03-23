@@ -11,6 +11,11 @@
 <body>
   <div id="app">
     <h2>{{message}}</h2>
+    <h2>{{firstName}}</h2>
+    <h2>{{lastName}}</h2>
+    <h2>{{info}}</h2>
+    <button @click="changFirstName">改变名字</button>
+    <button @click="changinfo">改变info</button>
   </div>
 
   <script src="../js/vue.js"></script>
@@ -20,10 +25,36 @@
       // data:option api
       data: function () {
         return {
-          message: "Hello World"
+          message: "Hello World",
+          firstName: "wang",
+          lastName: "meng",
+          info: { name: "zhang", age: 18 }
+        }
+      },
+      watch: {
+        firstName(newvalue, oldvalue) {
+          console.log("firstname发生改变", newvalue, oldvalue)
+        },
+        info(newvalue, oldvalue) {
+          console.log("info发生改变", newvalue, oldvalue)
+          // 直接展开
+          console.log({...newvalue})
+          // Vue.toRaw()
+          console.log("Vue.toRaw获取原生对象",Vue.toRaw(oldvalue))
+        },
+      },
+        methods: {
+          changFirstName() {
+            this.firstName = "zhang"
+          },
+          changinfo() {
+            console.log("info点击改变了")
+            this.info = {name: "里" }
+          }
         }
       }
-    })
+    
+    )
     //挂载app
     app.mount("#app")
   </script>
