@@ -6,11 +6,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .shopCar,
+    h2 {
+      margin: 0 auto;
+      /* text-align: center; */
+    }
+    /* button{
+      width: 4px;
+      height: 4px;
+    } */
+  </style>
 </head>
 
 <body>
   <div id="app">
-    <table border="1px" cellspacing="0" text-align="center" minwidth="20px">
+    <table class="shopCar" border="1px" cellspacing="0" minwidth="20px">
       <tr>
         <th></th>
         <th>书籍名称</th>
@@ -19,8 +30,16 @@
         <th>购买数量</th>
         <th>操作</th>
       </tr>
-      <tr></tr>
+      <tr v-for="(item,index) of info" :key="index" v-show="item.statue">
+        <td>{{index+1}}</td>
+        <td>{{item.bookName}}</td>
+        <td>{{item.publicDate}}</td>
+        <td>{{item.price}}</td>
+        <td><button :disabled="buttonDisabled(index)" @click="subnum(index)">-1</button>{{item.num}}<button @click="incrnum(index)">+1</button></td>
+        <td><button @click="deleshop(index)" >移除</button></td>
+      </tr>
     </table>
+    <h2>总价:{{totalPrice}}</h2>
   </div>
 
   <script src="../js/vue.js"></script>
@@ -30,7 +49,58 @@
       // data:option api
       data: function () {
         return {
-          message: "Hello World"
+          totalPrice: 0,
+          info: [
+            { id: 1, bookName: "算法导论", publicDate: "2006-9", price: 85, num: 1, statue: true },
+            { id: 2, bookName: "代码大全", publicDate: "2016-8", price: 45, num: 1, statue: true },
+            { id: 3, bookName: "编程珠玑", publicDate: "2006-10", price: 43, num: 2, statue: true },
+            { id: 4, bookName: "UNIX编程艺术", publicDate: "2006-11", price: 85, num: 1, statue: true },
+            { id: 5, bookName: "数据结构", publicDate: "2006-12", price: 26, num: 1, statue: true },
+          ],
+          i:0
+
+        }
+      },
+      watch:{
+       info:{
+        handler(){
+          this.totalPrice = 0
+          this.i=0
+          for (item of this.info) {
+             if (item.statue) {
+               this.totalPrice += Number(item.price) * Number(item.num)
+             }
+            }
+        },
+        deep:true,
+        immediate:true
+       } 
+      },
+      // computed:{
+      //   getTotalPrice(){
+      //     for(item of this.info){
+      //       if(item.statue){
+      //         this.totalPrice += Number(item.price)*Number(item.num) 
+      //       }
+      //     }
+      //     return this.totalPrice
+          
+      //   }
+      // },
+      methods:{
+        deleshop(index){
+          console.log(this.info[index])
+          this.info[index].statue = false
+        },
+        buttonDisabled(index){
+          console.log(this.info[index].num === 1)
+          return this.info[index].num===1
+        },
+        subnum(index){
+          this.info[index].num -= 1
+        },
+        incrnum(index){
+          this.info[index].num += 1
         }
       }
     })
