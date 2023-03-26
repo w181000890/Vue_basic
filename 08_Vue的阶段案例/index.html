@@ -90,7 +90,7 @@
       methods:{
         deleshop(index){
           console.log(this.info[index])
-          this.info[index].statue = false
+          this.info.splice(index,1)
         },
         buttonDisabled(index){
           console.log(this.info[index].num === 1)
