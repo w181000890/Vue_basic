@@ -11,7 +11,10 @@
 <body>
   <div id="app">
     <input type="text" v-model="message">
-    <h2>{{message}}</h2>
+    <input type="text" v-bind:value="message1" @input="changeinfo">
+    
+    <h2>{{message}}</h2><h2>{{message1}}</h2>
+    
   </div>
 
   <script src="../js/vue.js"></script>
@@ -21,7 +24,13 @@
       // data:option api
       data: function () {
         return {
-          message: "Hello World"
+          message: "Hello World",
+          message1:"haha"
+        }
+      },
+      methods:{
+        changeinfo(event){
+          this.message1 = event.target.value
         }
       }
     })
