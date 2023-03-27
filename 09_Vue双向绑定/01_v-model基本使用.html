@@ -15,6 +15,12 @@
     
     <h2>{{message}}</h2><h2>{{message1}}</h2>
     
+      <input type="text" v-model="accountName">
+      <input type="password" v-model="password">
+      <button @click="getINfo">登录</button>
+    
+    
+    
   </div>
 
   <script src="../js/vue.js"></script>
@@ -25,12 +31,17 @@
       data: function () {
         return {
           message: "Hello World",
-          message1:"haha"
+          message1:"haha",
+          accountName:"",
+          password:""
         }
       },
       methods:{
         changeinfo(event){
           this.message1 = event.target.value
+        },
+        getINfo(){
+          console.log(this.accountName)
         }
       }
     })
