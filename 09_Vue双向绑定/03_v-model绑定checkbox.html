@@ -14,7 +14,13 @@
     <input type="checkbox" id="agree" v-model="checkmessage">同意协议
     </label>
     <label for="habby">
-      
+      <input type="checkbox"  id="habby" v-model="info" value="sing">唱歌
+    </label>
+    <label for="dance">
+      <input type="checkbox" id="dance" v-model="info" value="dance">跳舞
+    </label>
+    <label for="basektball">
+      <input type="checkbox" id="basektball" v-model="info" value="basektball">篮球
     </label>
   </div>
 
@@ -25,7 +31,8 @@
       // data:option api
       data: function () {
         return {
-         checkmessage:true
+         checkmessage:true,
+         info:[]
         }
       }
     })
