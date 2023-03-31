@@ -16,8 +16,14 @@
       <option value="上海">上海</option>
       <option value="天津市">天津</option>
       <option value="武汉">武汉</option>
+    </select><br>
+    <select multiple v-model="infos">
+      <option value="上海">上海</option>
+      <option value="北湖">北湖</option>
+      <option value="南湖">南湖</option>
+      <option value="东湖">东湖</option>
+      <option value="西湖">西湖</option>
     </select>
-    select
   </div>
 
   <script src="../js/vue.js"></script>
@@ -29,6 +35,7 @@
         return {
           message: "Hello World",
           city:"上海",
+          infos:[],
         }
       }
     })
