@@ -1122,7 +1122,79 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 * (item, index) in 数组
 * (item, index) of 数组
 
+注意
 
+* 注意上面的顺序：数组元素项item是在前面的，索引项index是在后面的
+
+  ```html
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .item {
+        margin-top: 5px;
+        background-color: orange;
+      }
+  
+      .item .title {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+  
+    <div id="app">
+      <!-- 1.电影列表进行渲染 -->
+      <h2>电影列表</h2>
+      <ul>
+        <li v-for="movie in movies">{{ movie }}</li>
+      </ul>
+  
+      <!-- 2.电影列表同时有索引 -->
+      <ul>
+        <li v-for="(movie, index) in movies">{{index + 1}} - {{ movie }}</li>
+      </ul>
+  
+      <!-- 3.遍历数组复杂数据 -->
+      <h2>商品列表</h2>
+      <div class="item" v-for="item in products">
+        <h3 class="title">商品: {{item.name}}</h3>
+        <span>价格: {{item.price}}</span>
+        <p>秒杀: {{item.desc}}</p>
+      </div>
+    </div>
+    
+    <script src="../lib/vue.js"></script>
+    <script>
+      // 1.创建app
+      const app = Vue.createApp({
+        // data: option api
+        data() {
+          return {
+            // 1.movies
+            movies: ["星际穿越", "少年派", "大话西游", "哆啦A梦"],
+  
+            // 2.数组: 存放的是对象
+            products: [
+              { id: 110, name: "Macbook", price: 9.9, desc: "9.9秒杀, 快来抢购!" },
+              { id: 111, name: "iPhone", price: 8.8, desc: "9.9秒杀, 快来抢购!" },
+              { id: 112, name: "小米电脑", price: 9.9, desc: "9.9秒杀, 快来抢购!" },
+            ]
+          }
+        },
+      })
+  
+      // 2.挂载app
+      app.mount("#app")
+    </script>
+  </body>
+  </html>
+  ```
+
+  
 
 ###  v-for其他的类型
 
@@ -1132,6 +1204,56 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
   * item in 10
 * 可迭代对象(字符串)
 
+```html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1.遍历数组 -->
+
+    <!-- 2.遍历对象 -->
+    <ul>
+      <li v-for="(value, key, index) in info">{{value}}-{{key}}-{{index}}</li>
+    </ul>
+
+    <!-- 3.遍历字符串(iterable) -->
+    <ul>
+      <li v-for="item in message">{{item}}</li>
+    </ul>
+
+    <!-- 4.遍历数字 -->
+    <ul>
+      <li v-for="item in 100">{{item}}</li>
+    </ul>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          message: "Hello Vue",
+          movies: [],
+          info: { name: "why", age: 18, height: 1.88 }
+        }
+      },
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
+
 
 
 
@@ -1140,9 +1262,72 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 
 #### VNode/虚拟DOM
 
-* template元素 -> VNode
-* 虚拟DOM作用之一:
-  * 跨平台
+* VNode
+
+  ```
+  1.VNode的全称是Virtual Node，也就是虚拟节点
+  2.VNode的本质是一个JavaScript的对象
+  3.template元素 ->解析成 VNode--->转换为真实DOM元素
+  ```
+* 虚拟DOM
+
+  * template元素--->一个个VNode虚拟节点--->VNode Tree -->虚拟DOM--->真实DOM
+
+  * 作用
+
+    * 方便进行diff算法
+
+    * 方便进行跨平台
+
+      
+
+* ```
+  * template元素 -> VNode
+  * 虚拟DOM作用之一:
+    * 跨平台
+  ```
+
+  ```html
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+  
+    <div id="app">
+      <!-- 如果div没有实际的意义, 那么可以使用template替换 -->
+      <div v-for="(value, key, index) in infos">
+        <span>{{value}}</span>
+        <strong>{{key}}</strong>
+        <i>{{index}}</i>
+      </div>
+    </div>
+    
+    <script src="../lib/vue.js"></script>
+    <script>
+      // 1.创建app
+      const app = Vue.createApp({
+        // data: option api
+        data() {
+          return {
+            infos: { name: "why", age: 18, height: 1.88 }
+          }
+        },
+      })
+  
+      // 2.挂载app
+      app.mount("#app")
+    </script>
+  </body>
+  </html>
+  ```
+
+  
+
+#### 
 
 
 
