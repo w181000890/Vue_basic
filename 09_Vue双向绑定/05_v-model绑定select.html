@@ -11,6 +11,13 @@
 <body>
   <div id="app">
     <h2>{{message}}</h2>
+    <select v-model="city">
+      <option value="北京">北京</option>
+      <option value="上海">上海</option>
+      <option value="天津市">天津</option>
+      <option value="武汉">武汉</option>
+    </select>
+    select
   </div>
 
   <script src="../js/vue.js"></script>
@@ -20,7 +27,8 @@
       // data:option api
       data: function () {
         return {
-          message: "Hello World"
+          message: "Hello World",
+          city:"上海",
         }
       }
     })
