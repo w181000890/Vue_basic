@@ -11,6 +11,18 @@
 <body>
   <div id="app">
     <h2>{{message}}</h2>
+    <select multiple v-model="info">
+      <option :value="item.value"  v-for="(item,index) in city" :key="item">{{item.name}}</option>
+    </select>
+    <h2>info:{{info}}</h2>
+
+    <template v-for="(item,index) in fruits" :key="item.value">
+    
+        <label :for="item.value">
+          <input type="checkbox" :value="item.value" :id="item.value" v-model="fruit">{{item.text}}
+        </label>
+      
+    </template>
   </div>
 
   <script src="../js/vue.js"></script>
@@ -20,7 +32,21 @@
       // data:option api
       data: function () {
         return {
-          message: "Hello World"
+          message: "Hello World",
+          city:[
+            {value:"beijing",name:"北京"},
+            {value:"shanghai",name:"上海"},
+            {value:"najing",name:"南京"},
+            { value: "wuhan", name: "武汉" },
+          ],
+          info:[],
+          fruits:[
+            {value:"xiangjiao",text:'香蕉'},
+            {value:"pingguo",text:'苹果'},
+            {value:"juzi",text:'橘子'},
+            { value: "xigua", text: '西瓜' },
+          ],
+          fruit:[]
         }
       }
     })
