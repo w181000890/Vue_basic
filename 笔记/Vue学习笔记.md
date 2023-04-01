@@ -2320,17 +2320,284 @@ created 生命周期回调函数: 当前的组件被创建时自动执行
 ### 7.2. v-model其他类型
 
 * textarea
+
+  ```html
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+  
+    <div id="app">
+      <textarea cols="30" rows="10" v-model="content"></textarea>
+  
+      <p>输入的内容: {{content}}</p>
+    </div>
+    
+    <script src="../lib/vue.js"></script>
+    <script>
+      // 1.创建app
+      const app = Vue.createApp({
+        // data: option api
+        data() {
+          return {
+            content: ""
+          }
+        },
+      })
+  
+      // 2.挂载app
+      app.mount("#app")
+    </script>
+  </body>
+  </html>
+  ```
+
+  
+
 * checkbox
+
   * 单选
+
   * 多选
+
+    ```html
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+    </head>
+    <body>
+    
+      <div id="app">
+        <!-- 1.checkbox单选框: 绑定到属性中的值是一个Boolean -->
+        <label for="agree">
+          <input id="agree" type="checkbox" v-model="isAgree"> 同意协议
+        </label>
+        <h2>单选框: {{isAgree}}</h2>
+        <hr>
+    
+        <!-- 2.checkbox多选框: 绑定到属性中的值是一个Array -->
+        <!-- 注意: 多选框当中, 必须明确的绑定一个value值 -->
+        <div class="hobbies">
+          <h2>请选择你的爱好:</h2>
+          <label for="sing">
+            <input id="sing" type="checkbox" v-model="hobbies" value="sing"> 唱
+          </label>
+          <label for="jump">
+            <input id="jump" type="checkbox" v-model="hobbies" value="jump"> 跳
+          </label>
+          <label for="rap">
+            <input id="rap" type="checkbox" v-model="hobbies" value="rap"> rap
+          </label>
+          <label for="basketball">
+            <input id="basketball" type="checkbox" v-model="hobbies" value="basketball"> 篮球
+          </label>
+          <h2>爱好: {{hobbies}}</h2>
+        </div>
+      </div>
+      
+      <script src="../lib/vue.js"></script>
+      <script>
+        // 1.创建app
+        const app = Vue.createApp({
+          // data: option api
+          data() {
+            return {
+              isAgree: false,
+              hobbies: []
+            }
+          },
+        })
+    
+        // 2.挂载app
+        app.mount("#app")
+      </script>
+    </body>
+    </html>
+    ```
+
+    
+
 * radio
+
+  ```html
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+  
+    <div id="app">
+      <div class="gender">
+        <label for="male">
+          <input id="male" type="radio" v-model="gender" value="male"> 男
+        </label>
+        <label for="female">
+          <input id="female" type="radio" v-model="gender" value="female"> 女
+        </label>
+        <h2>性别: {{gender}}</h2>
+      </div>
+    </div>
+    
+    <script src="../lib/vue.js"></script>
+    <script>
+      // 1.创建app
+      const app = Vue.createApp({
+        // data: option api
+        data() {
+          return {
+            gender: "female"
+          }
+        },
+      })
+  
+      // 2.挂载app
+      app.mount("#app")
+    </script>
+  </body>
+  </html>
+  ```
+
+  
+
 * select
+
   * 单选
+
   * 多选
+
+  * ```html
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+    </head>
+    <body>
+    
+      <div id="app">
+        <!-- select的单选 -->
+        <select v-model="fruit">
+          <option value="apple">苹果</option>
+          <option value="orange">橘子</option>
+          <option value="banana">香蕉</option>
+        </select>
+        <h2>单选: {{fruit}}</h2>
+        <hr>
+        
+        <!-- select的多选 -->
+        <select multiple size="3" v-model="fruits">
+          <option value="apple">苹果</option>
+          <option value="orange">橘子</option>
+          <option value="banana">香蕉</option>
+        </select>
+        <h2>多选: {{fruits}}</h2>
+      </div>
+      
+      <script src="../lib/vue.js"></script>
+      <script>
+        // 1.创建app
+        const app = Vue.createApp({
+          // data: option api
+          data() {
+            return {
+              fruit: "orange",
+              fruits: []
+            }
+          },
+        })
+    
+        // 2.挂载app
+        app.mount("#app")
+      </script>
+    </body>
+    </html>
+    ```
+
+    
 
 
 
 ### 7.3. v-model值绑定
+
+```html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1.select的值绑定 -->
+    <select multiple size="3" v-model="fruits">
+      <option v-for="item in allFruits" 
+              :key="item.value" 
+              :value="item.value">
+        {{item.text}}
+      </option>
+    </select>
+    <h2>多选: {{fruits}}</h2>
+
+    <hr>
+
+    <!-- 2.checkbox的值绑定 -->
+    <div class="hobbies">
+      <h2>请选择你的爱好:</h2>
+      <template v-for="item in allHobbies" :key="item.value">
+        <label :for="item.value">
+          <input :id="item.value" type="checkbox" v-model="hobbies" :value="item.value"> {{item.text}}
+        </label>
+      </template>
+      <h2>爱好: {{hobbies}}</h2>
+    </div>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          // 水果
+          allFruits: [
+            { value: "apple", text: "苹果" },
+            { value: "orange", text: "橘子" },
+            { value: "banana", text: "香蕉" },
+          ],
+          fruits: [],
+
+          // 爱好
+          allHobbies: [
+            { value: "sing", text: "唱" },
+            { value: "jump", text: "跳" },
+            { value: "rap", text: "rap" },
+            { value: "basketball", text: "篮球" }
+          ],
+          hobbies: []
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
 
 
 
@@ -2342,7 +2609,69 @@ created 生命周期回调函数: 当前的组件被创建时自动执行
 * number
 * trim
 
+```html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
 
+  <div id="app">
+    <!-- 1.lazy: 绑定change事件  -->
+    <input type="text" v-model.lazy="message">
+    <h2>message: {{message}}</h2>
+
+    <hr>
+
+    <!-- 2.number: 自动将内容转换成数字 -->
+    <input type="text" v-model.number="counter">
+    <h2>counter:{{counter}}-{{typeof counter}}</h2>
+
+    <input type="number" v-model="counter2">
+    <h2>counter2:{{counter2}}-{{typeof counter2}}</h2>
+
+    <hr>
+
+    <!-- 3.trim: 去除收尾的空格 -->
+    <input type="text" v-model.trim="content">
+    <h2>content: {{content}}</h2>
+
+    <hr>
+
+    <!-- 4.使用多个修饰符 -->
+    <input type="text" v-model.lazy.trim="content">
+    <h2>content: {{content}}</h2>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          message: "Hello Vue",
+          counter: 0,
+          counter2: 0,
+          content: ""
+        }
+      },
+      watch: {
+        content(newValue) {
+          console.log("content:", newValue)
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
 
 
 
