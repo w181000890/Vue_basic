@@ -1461,7 +1461,122 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 缺点二：多次使用方法的时候，没有缓存，也需要多次计算
 ```
 
+```html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
 
+  <div id="app">
+    <!-- 插值语法表达式直接进行拼接 -->
+    <!-- 1.拼接名字 -->
+    <h2>{{ firstName + " " + lastName }}</h2>
+    <h2>{{ firstName + " " + lastName }}</h2>
+    <h2>{{ firstName + " " + lastName }}</h2>
+
+    <!-- 2.显示分数等级 -->
+    <h2>{{ score >= 60 ? '及格': '不及格' }}</h2>
+
+    <!-- 3.反转单词显示文本 -->
+    <h2>{{ message.split(" ").reverse().join(" ") }}</h2>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          // 1.姓名
+          firstName: "kobe",
+          lastName: "bryant",
+
+          // 2.分数: 及格/不及格
+          score: 80,
+
+          // 3.一串文本: 对文本中的单词进行反转显示
+          message: "my name is why"
+        }
+      },
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
+
+* methods
+
+  ```html
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+  
+    <div id="app">
+      <!-- 插值语法表达式直接进行拼接 -->
+      <!-- 1.拼接名字 -->
+      <h2>{{ getFullname() }}</h2>
+      <h2>{{ getFullname() }}</h2>
+      <h2>{{ getFullname() }}</h2>
+  
+      <!-- 2.显示分数等级 -->
+      <h2>{{ getScoreLevel() }}</h2>
+  
+      <!-- 3.反转单词显示文本 -->
+      <h2>{{ reverseMessage() }}</h2>
+    </div>
+    
+    <script src="../lib/vue.js"></script>
+    <script>
+      // 1.创建app
+      const app = Vue.createApp({
+        // data: option api
+        data() {
+          return {
+            // 1.姓名
+            firstName: "kobe",
+            lastName: "bryant",
+  
+            // 2.分数: 及格/不及格
+            score: 80,
+  
+            // 3.一串文本: 对文本中的单词进行反转显示
+            message: "my name is why"
+          }
+        },
+        methods: {
+          getFullname() {
+            return this.firstName + " " + this.lastName
+          },
+          getScoreLevel() {
+            return this.score >= 60 ? "及格": "不及格"
+          },
+          reverseMessage() {
+            return this.message.split(" ").reverse().join(" ")
+          }
+        }
+      })
+  
+      // 2.挂载app
+      app.mount("#app")
+    </script>
+  </body>
+  </html>
+  ```
+
+  
 
 #### 5.1.2. 计算属性用法
 
@@ -1487,7 +1602,134 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
         },
 ```
 
+```html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
 
+  <div id="app">
+    <!-- 插值语法表达式直接进行拼接 -->
+    <!-- 1.拼接名字 -->
+    <h2>{{ fullname }}</h2>
+    <h2>{{ fullname }}</h2>
+    <h2>{{ fullname }}</h2>
+
+    <!-- 2.显示分数等级 -->
+    <h2>{{ scoreLevel }}</h2>
+
+    <!-- 3.反转单词显示文本 -->
+    <h2>{{ reverseMessage }}</h2>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          // 1.姓名
+          firstName: "kobe",
+          lastName: "bryant",
+
+          // 2.分数: 及格/不及格
+          score: 80,
+
+          // 3.一串文本: 对文本中的单词进行反转显示
+          message: "my name is why"
+        }
+      },
+      computed: {
+        // 1.计算属性默认对应的是一个函数
+        fullname() {
+          return this.firstName + " " + this.lastName
+        },
+
+        scoreLevel() {
+          return this.score >= 60 ? "及格": "不及格"
+        },
+
+        reverseMessage() {
+          return this.message.split(" ").reverse().join(" ")
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
+
+* 区别
+
+  ```html
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+  
+    <div id="app">
+      <!-- 1.methods -->
+      <h2>{{ getFullname() }}</h2>
+      <h2>{{ getFullname() }}</h2>
+      <h2>{{ getFullname() }}</h2>
+  
+      <!-- 2.computed -->
+      <h2>{{ fullname }}</h2>
+      <h2>{{ fullname }}</h2>
+      <h2>{{ fullname }}</h2>
+  
+      <!-- 修改name值 -->
+      <button @click="changeLastname">修改lastname</button>
+    </div>
+    
+    <script src="../lib/vue.js"></script>
+    <script>
+      // 1.创建app
+      const app = Vue.createApp({
+        // data: option api
+        data() {
+          return {
+            firstName: "kobe",
+            lastName: "bryant"
+          }
+        },
+        methods: {
+          getFullname() {
+            console.log("getFullname-----")
+            return this.firstName + " " + this.lastName
+          },
+          changeLastname() {
+            this.lastName = "why"
+          }
+        },
+        computed: {
+          fullname() {
+            console.log("computed fullname-----")
+            return this.firstName + " " + this.lastName
+          }
+        }
+      })
+  
+      // 2.挂载app
+      app.mount("#app")
+    </script>
+  </body>
+  </html>
+  ```
+
+  
 
 #### 5.1.3. computed和methods区别
 
@@ -1615,6 +1857,63 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
   }
   ```
 
+  ```html
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+  
+    <div id="app">
+      <h2>{{message}}</h2>
+      <button @click="changeMessage">修改message</button>
+    </div>
+    
+    <script src="../lib/vue.js"></script>
+    <script>
+      // Proxy -> Reflect
+      // 1.创建app
+      const app = Vue.createApp({
+        // data: option api
+        data() {
+          return {
+            message: "Hello Vue",
+            info: { name: "why", age: 18 }
+          }
+        },
+        methods: {
+          changeMessage() {
+            this.message = "你好啊, 李银河!"
+            this.info = { name: "kobe" }
+          }
+        },
+        watch: {
+          // 1.默认有两个参数: newValue/oldValue
+          message(newValue, oldValue) {
+            console.log("message数据发生了变化:", newValue, oldValue)
+          },
+          info(newValue, oldValue) {
+            // 2.如果是对象类型, 那么拿到的是代理对象
+            // console.log("info数据发生了变化:", newValue, oldValue)
+            // console.log(newValue.name, oldValue.name)
+  
+            // 3.获取原生对象
+            // console.log({ ...newValue })
+            console.log(Vue.toRaw(newValue))
+          }
+        }
+      })
+  
+      // 2.挂载app
+      app.mount("#app")
+    </script>
+  </body>
+  </html>
+  ```
+
   
 
 
@@ -1659,6 +1958,71 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
             console.log("name发生改变:", newValue, oldValue)
           }
         }
+  ```
+
+  ```html
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+  
+    <div id="app">
+      <h2>{{ info.name }}</h2>
+      <button @click="changeInfo">修改info</button>
+    </div>
+    
+    <script src="../lib/vue.js"></script>
+    <script>
+      // 1.创建app
+      const app = Vue.createApp({
+        // data: option api
+        data() {
+          return {
+            info: { name: "why", age: 18 }
+          }
+        },
+        methods: {
+          changeInfo() {
+            // 1.创建一个新对象, 赋值给info
+            // this.info = { name: "kobe" }
+  
+            // 2.直接修改原对象某一个属性
+            this.info.name = "kobe"
+          }
+        },
+        watch: {
+          // 默认watch监听不会进行深度监听
+          // info(newValue, oldValue) {
+          //   console.log("侦听到info改变:", newValue, oldValue)
+          // }
+  
+          // 进行深度监听
+          info: {
+            handler(newValue, oldValue) {
+              console.log("侦听到info改变:", newValue, oldValue)
+              console.log(newValue === oldValue)
+            },
+            // 监听器选项:
+            // info进行深度监听
+            deep: true,
+            // 第一次渲染直接执行一次监听器
+            immediate: true
+          },
+          "info.name": function(newValue, oldValue) {
+            console.log("name发生改变:", newValue, oldValue)
+          }
+        }
+      })
+  
+      // 2.挂载app
+      app.mount("#app")
+    </script>
+  </body>
+  </html>
   ```
 
   
@@ -1727,7 +2091,322 @@ created 生命周期回调函数: 当前的组件被创建时自动执行
 </html>
 ```
 
+## 六. 阶段案例
 
+### 6.1. 购物车(不看我的代码, 自己手写出来)
+
+```html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      /* text-align: center; */
+    }
+
+    thead {
+      background-color: #f5f5f5;
+    }
+
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px 16px;
+    }
+
+    .active {
+      background-color: skyblue;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1.搭建界面内容 -->
+    <template v-if="books.length">
+      <table>
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>书籍名称</th>
+            <th>出版日期</th>
+            <th>价格</th>
+            <th>购买数量</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in books" 
+              :key="item.id"
+              @click="rowClick(index)"
+              :class="{ active: index === currentIndex }">
+            <td>{{ index + 1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ formatPrice(item.price) }}</td>
+            <td>
+              <button :disabled="item.count <= 1" @click="decrement(index, item)">-</button>
+              {{ item.count }}
+              <button @click="increment(index, item)">+</button>
+            </td>
+            <td>
+              <button @click="removeBook(index, item)">移除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <h2>总价: {{ formatPrice(totalPrice) }}</h2>
+    </template>
+
+    <template v-else>
+      <h1>购物车为空, 请添加喜欢的书籍~</h1>
+      <p>商场中有大量的IT类的书籍, 请选择添加学习, 注意保护好自己的头发!</p>
+    </template>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script src="./data/data.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          books: books,
+          currentIndex: 0
+        }
+      },
+      // computed
+      computed: {
+        totalPrice() {
+          // 1.直接遍历books
+          // let price = 0
+          // for (const item of this.books) {
+          //   price += item.price * item.count
+          // }
+          // return price
+
+          // 2.reduce(自己决定)
+          return this.books.reduce((preValue, item) => {
+            return preValue + item.price * item.count
+          }, 0)
+        }
+      },
+      methods: {
+        formatPrice(price) {
+          return "¥" + price
+        },
+
+        // 监听-和+操作
+        decrement(index, item) {
+          console.log("点击-")
+          // this.books[index].count--
+          item.count--
+        },
+        increment(index, item) {
+          console.log("点击+:", index)
+          // this.books[index].count++
+          item.count++
+        },
+        removeBook(index, item) {
+          this.books.splice(index, 1)
+        },
+        rowClick(index) {
+          this.currentIndex = index
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
+
+
+
+
+
+
+
+### 6.2. 列表的选择(点击一项, 变成选中状态)
+
+* currentIndex记录点击
+
+
+
+
+
+## 七. v-model双向绑定
+
+### 7.1. v-model基本使用
+
+* input手动双向绑定
+* v-model
+* 原理
+
+```html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1.手动的实现了双向绑定 -->
+    <!-- <input type="text" :value="message" @input="inputChange"> -->
+
+    <!-- 2.v-model实现双向绑定 -->
+    <!-- <input type="text" v-model="message"> -->
+
+    <!-- 3.登录功能 -->
+    <label for="account">
+      账号:<input id="account" type="text" v-model="account">
+    </label>
+    <label for="password">
+      密码:<input id="password" type="password" v-model="password">
+    </label>
+
+    <button @click="loginClick">登录</button>
+
+    <h2>{{message}}</h2>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          message: "Hello Model",
+          account: "",
+          password: ""
+        }
+      },
+      methods: {
+        inputChange(event) {
+          this.message = event.target.value
+        },
+        loginClick() {
+          const account = this.account
+          const password = this.password
+
+          // url发送网络请求
+          console.log(account, password)
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
+
+
+
+
+
+### 7.2. v-model其他类型
+
+* textarea
+* checkbox
+  * 单选
+  * 多选
+* radio
+* select
+  * 单选
+  * 多选
+
+
+
+### 7.3. v-model值绑定
+
+
+
+
+
+### 7.4. v-model修饰符
+
+* lazy
+* number
+* trim
+
+
+
+
+
+## 八. 组件化的基础
+
+### 8.1. 组件化的思想
+
+
+
+
+
+### 8.2. 注册全局组件
+
+```js
+app.component("my-cpn", {
+    
+})
+```
+
+
+
+### 8.3. 注册局部组件
+
+```js
+const App = {
+  components: {
+      "my-cpn": {}
+  }
+}
+```
+
+
+
+## 九. Vue脚手架
+
+### 9.1. Vue的开发模式
+
+* html
+* .vue文件
+
+
+
+### 9.2. Vue CLI安装和使用
+
+
+
+
+
+### 9.3. Vue项目目录结构
+
+
+
+
+
+### 9.4. browserslistrc文件作用(了解)
+
+
+
+
+
+### 9.5. 从main.js入口开始, 如何一步步创建自己的组件
+
+* App.vue
+* ProductItem.vue
 
 
 
