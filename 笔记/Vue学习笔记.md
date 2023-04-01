@@ -1325,11 +1325,6 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
   </html>
   ```
 
-  
-
-
-
-
 
 #### 4.3.2. key的作用
 
