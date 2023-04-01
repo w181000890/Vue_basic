@@ -11,6 +11,15 @@
 <body>
   <div id="app">
     <h2>{{message}}</h2>
+    <hr>
+    <input type="text" v-model.lazy="info">
+    <h2>info:{{info}}</h2>
+    <hr>
+    <input type="text" v-model.number="info1">
+    <h2>info1:{{info1}}</h2>
+    <hr>
+    <input type="text" v-model.trim="info2">
+    <h2>info2{{info2}}</h2>
   </div>
 
   <script src="../js/vue.js"></script>
@@ -20,7 +29,10 @@
       // data:option api
       data: function () {
         return {
-          message: "Hello World"
+          message: "Hello World",
+          info:"hello vue",
+          info1:0,
+          info2:""
         }
       }
     })
