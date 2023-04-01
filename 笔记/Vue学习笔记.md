@@ -1116,7 +1116,7 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 
 ## 四. 列表渲染
 
-###  v-for的基本使用
+###  4.1 v-for的基本使用
 
 * item in 数组
 * (item, index) in 数组
@@ -1196,7 +1196,7 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 
   
 
-###  v-for其他的类型
+###  4.2 v-for其他的类型
 
 * 对象
   * (value, key, index) in obj
@@ -1260,7 +1260,7 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 
 ### 4.3. v-for绑定key属性
 
-#### VNode/虚拟DOM
+####  4.3.1 VNode/虚拟DOM
 
 * VNode
 
@@ -1327,7 +1327,7 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 
   
 
-#### 
+
 
 
 
