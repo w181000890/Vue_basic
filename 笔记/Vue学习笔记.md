@@ -1334,9 +1334,106 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 * 没有key的操作:
   * diff算法, 后续VNode复用性就不强
 
+```html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <ul>
+      <li v-for="item in names">{{ item }}</li>
+    </ul>
+    <button @click="changeArray">修改数组</button>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          names: ["abc", "cba", "nba", "aaa", "ccc"]
+        }
+      },
+      methods: {
+        changeArray() {
+          // 1.直接将数组修改为一个新的数组
+          // this.names = ["why", "kobe"]
+
+          // 2.通过一些数组的方法, 修改数组中的元素
+          // this.names.push("why")
+          // this.names.pop()
+          // this.names.splice(2, 1, "why")
+          // this.names.sort()
+          // this.names.reverse()
+
+          // 3.不修改原数组的方法是不能侦听(watch)
+          const newNames = this.names.map(item => item + "why")
+          this.names = newNames
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
+
 
 
 #### 4.3.3. key绑定id
+
+```html
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <button @click="insertF">插入f</button>
+    <ul>
+      <!-- key要求是唯一: id -->
+      <li v-for="item in letters" :key="item">{{item}}</li>
+    </ul>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          letters: ["a", "b", "c", "d", "e"]
+        }
+      },
+      methods: {
+        insertF() {
+          this.letters.splice(2, 0, "f")
+
+          this.letters.splice()
+        }
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
 
 
 
@@ -1351,21 +1448,55 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 * mustache插值语法自己写逻辑
 * methods完成逻辑
 
+```
+思路一的实现：插值语法
+缺点一：模板中存在大量的复杂逻辑，不便于维护（模板中表达式的初衷是用于简单的计算）；
+缺点二：当有多次一样的逻辑时，存在重复的代码；
+缺点三：多次使用的时候，很多运算也需要多次执行，没有缓存
+```
 
+```
+思路二的实现：method实现
+缺点一：我们事实上先显示的是一个结果，但是都变成了一种方法的调用；
+缺点二：多次使用方法的时候，没有缓存，也需要多次计算
+```
 
 
 
 #### 5.1.2. 计算属性用法
 
-* computed: { fullname() {} }
+* 计算属性
+  * 可以通过this访问数据
+  * 对于任何包含响应式数据的赋值逻辑,你应该使用计算属性
+  * 计算属性默认对应的是一个函数
+* 计算属性的用法
 
-
+```js
+       // 计算属性
+        computed: {
+          // 语法糖 --计算属性默认对应的是一个函数
+          fullName() {
+            return this.firstName + " " + this.lastName;
+          },
+          result() {
+            return this.score > 60 ? "及格" : "不及格";
+          },
+          reverseMes() {
+            return this.message.split(" ").reverse().join(" ");
+          },
+        },
+```
 
 
 
 #### 5.1.3. computed和methods区别
 
 * computed底层会缓存, 性能更高
+* 和method的区别
+  * computed底层会缓存, 性能更高
+  * 计算属性会基于它们的依赖关系进行缓存;
+  * 在数据不发生变化时，计算属性是不需要重新计算的
+  * 但是如果依赖的数据发生变化，在使用时，计算属性依然会重新进行计算
 
 
 
@@ -1373,8 +1504,70 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 
 #### 5.1.4. computed的完整写法
 
-* set
-* get
+* 计算属性在大多数情况下，只需要一个**getter**方法****即可，所以我们会将计算属性直接写成一个函数
+* set  设置
+* get   获取
+
+```html
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 1.拼接名字 -->
+      <h2>{{fullName}}</h2>
+      <button @click="editFullName">修改</button>
+    </div>
+
+    <script src="../lib/vue.js"></script>
+    <script>
+      // 1.创建app
+      const app = Vue.createApp({
+        // data: option api
+        data() {
+          return {
+            firstName: "Maria",
+            lastName: "Sklodowska-Curie",
+          };
+        },
+        //methods: option api
+        methods: {
+          editFullName() {
+            // 计算属性修改
+            this.fullName = "li minghao";
+          },
+        },
+        // 计算属性
+        computed: {
+          // 语法糖 --计算属性默认对应的是一个函数
+          fullName() {
+            return this.firstName + " " + this.lastName;
+          },
+          fullName: {
+            get() {
+              return this.firstName + " " + this.lastName;
+            },
+            set(newVal) {
+              // 拆分
+              const names = newVal.split(" ");
+              this.firstName = names[0];
+              this.lastName = names[1];
+            },
+          },
+        },
+      });
+
+      // 2.挂载app
+      app.mount("#app");
+    </script>
+  </body>
+</html>
+
+```
 
 
 
@@ -1384,16 +1577,91 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 
 #### 5.2.1. 基本侦听watch
 
-* watch: { message(newValue, oldValue) {} }
-* 注意: 对象类型
-  * Proxy对象 -> Vue.toRaw(newValue)
+* 侦听器: 在代码逻辑中监听某个数据的变化 
+* 侦听器默认有两个参数:newValue,oldValue
+
+  ```js 
+  watch: {
+            // 1,监听message
+            // 默认有两个参数:newValue,oldValue
+            message(newValue, oldValue) {
+              console.log("watch message ,messag发生改变");
+              console.log("newValue--", newValue);
+              console.log("oldValue---", oldValue);
+            },
+   }
+  ```
+
+  
+
+* 如果是对象类型, 那么拿到的是代理对象
+
+  * Proxy对象转成原始对象
+    * 方式一:   { ...newValue }
+    * 方式二: Vue.toRaw(newValue)
+
+  ```js 
+  watch:{
+           // 2.监听info
+            info(newValue, oldValue) {
+              // 2.如果是对象类型, 那么拿到的是代理对象
+              console.log("info--newValue", newValue);
+              console.log("info--oldValue", oldValue);
+              //3.获取原始对象
+              // 方式一:因为代理对象可迭代
+              console.log({ ...newValue });
+              console.log(Vue.toRaw(newValue));
+            },
+  }
+  ```
+
+  
 
 
 
 #### 5.2.2. 侦听的选项
 
-* deep
-* immediate
+* deep    **深度监听**
+
+  ```
+  1.因为默认情况下，watch只是在侦听info的引用变化，对于内部属性的变化是不会做出响应的
+  所以可以使用一个选项deep进行更深层的侦听(当info.name发生改变,也是可以监听到)
+  2.watch里面侦听的属性对应的也可以是一个Object
+  ```
+
+  
+* immediate    **希望一开始的就会立即执行一次**
+
+  ```
+  这个时候无论后面数据是否有变化，侦听的函数都会有限执行一次
+  ```
+
+  ```js 
+  watch: {
+          // 默认watch监听不会进行深度监听
+          // info(newValue, oldValue) {
+          //   console.log("侦听到info改变:", newValue, oldValue)
+          // }
+  
+          // 进行深度监听
+          info: {
+            handler(newValue, oldValue) {
+              console.log("侦听到info改变:", newValue, oldValue)
+              console.log(newValue === oldValue)
+            },
+            // 监听器选项:
+            // info进行深度监听
+            deep: true,
+            // 第一次渲染直接执行一次监听器
+            immediate: true
+          },
+          "info.name": function(newValue, oldValue) {
+            console.log("name发生改变:", newValue, oldValue)
+          }
+        }
+  ```
+
+  
 
 
 
@@ -1402,6 +1670,64 @@ p和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以
 * "info.name"
 * 别的写法
 * created -> this.$watch()
+
+```
+created 生命周期回调函数: 当前的组件被创建时自动执行
+一般在该函数中, 会进行网络请求
+```
+
+
+
+```html 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <h2>{{message}}</h2>
+    <button @click="changeMessage">修改message</button>
+  </div>
+  
+  <script src="../lib/vue.js"></script>
+  <script>
+    // 1.创建app
+    const app = Vue.createApp({
+      // data: option api
+      data() {
+        return {
+          message: "Hello Vue"
+        }
+      },
+      methods: {
+        changeMessage() {
+          this.message = "你好啊, 李银河!"
+        }
+      },
+      // 生命周期回调函数: 当前的组件被创建时自动执行
+      // 一般在该函数中, 会进行网络请求
+      created() {
+        // ajax/fetch/axios
+        console.log("created")
+
+        this.$watch("message", (newValue, oldValue) => {
+          console.log("message数据变化:", newValue, oldValue)
+        }, { deep: true })
+      }
+    })
+
+    // 2.挂载app
+    app.mount("#app")
+  </script>
+</body>
+</html>
+```
+
+
 
 
 
