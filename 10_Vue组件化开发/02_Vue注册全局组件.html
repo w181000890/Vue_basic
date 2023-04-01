@@ -6,15 +6,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    .product{
+      background-color: orange;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
     <h2>{{message}}</h2>
+    <product-items></product-items>
+    <product-items></product-items>
+    <product-items></product-items><product-items></product-items>
   </div>
 
   <script src="../js/vue.js"></script>
   <script>
+    const product = {
+      template:`<div class="product">
+      <h2>商品名称</h2>
+      <div>商品图片</div>
+      <div>商品价格</div>
+    </div> `
+    }
     // 创建app
     const app = Vue.createApp({
       // data:option api
@@ -24,6 +39,7 @@
         }
       }
     })
+    app.component( "product-items",product )
     //挂载app
     app.mount("#app")
   </script>
