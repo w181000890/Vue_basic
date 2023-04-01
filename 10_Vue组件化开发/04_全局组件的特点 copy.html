@@ -6,24 +6,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
-    .movie {
-      background-color: orange;
-    }
-  </style>
 </head>
 
 <body>
   <div id="app">
     <h2>{{message}}</h2>
-    <movie-item></movie-item>
     <nav-item></nav-item>
-    
+    <movie-item></movie-item>
+
   </div>
+
+
   <template id="nav">
+   <h2>------------start------------</h2>
+    <h2>我是当行懒</h2>
+    <movie-item></movie-item>
+    <h2>------------end-=------------</h2>
   
-      <h2>我是当行懒</h2>
-    
   </template>
   <template id="movie">
     <div class="movie">
@@ -33,32 +32,43 @@
     <button @click="changname">改变电影名称</button>
   </template>
 
+
   <script src="../js/vue.js"></script>
   <script>
+    const movieItem = {
+      template:'#movie',
+      data:function(){
+        return{
+          movieName:"西游记"
+        }
+      },
+      methods: {
+        changname() {
+          this.movieName = "红楼梦"
+        }
+      }
+    }
     // 创建app
     const app = Vue.createApp({
+      // 注册局部组件
+      components:{
+        movieItem,
+        navItem:{
+          template: "#nav",
+          components:{
+            movieItem
+          }
+          
+          
+        }
+
+      },
       // data:option api
       data: function () {
         return {
           message: "Hello World"
         }
       }
-    })
-    app.component("movie-item",{
-      template:`#movie`,
-      data:function(){
-        return{
-          movieName:"西游记"
-        }
-      },
-      methods:{
-        changname(){
-          this.movieName="红楼梦"
-        }
-      }
-    })
-    app.component("nav-item",{
-      template:"#nav"
     })
     //挂载app
     app.mount("#app")
